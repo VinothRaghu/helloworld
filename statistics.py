@@ -1,23 +1,39 @@
 import math
+
+
 def calculateStats(numbers):
-    for num2 in numbers:
-        num1=math.isnan(num2)
-        print ("isnan:",num1)
-        if num1==1:
-           print ("istrue:",numbers)
-           return numbers
-        
-        else:
-            x=sum(num2)
-            print ("sum",x)
-            y=max(num2)
-            z=min(num2)
-            avg_value = sum(num2) / len(num2)
-            print (avg_value,y,z)
-            hash1 = {"avg": avg_value, "max": y,"min": z}
-    
-    
+    hash1 = {"avg": None, "max": None, "min": None}
+    if not numbers:
+        hash1["avg"] = math.nan
+        hash1["max"] = math.nan
+        hash1["min"] = math.nan
+    else:
+        hash1["avg"] = sum(numbers) / len(numbers)
+        hash1["max"]=max(numbers)
+        hash1["min"]=min(numbers)
     return hash1
 
-def calculateStats1():
-    return True
+
+class EmailAlert:
+    emailSent = None
+
+
+class LEDAlert:
+    ledGlows = None
+
+
+class StatsAlerter():
+    def __init__(self, maxThreshold, tuple_obj):
+        self.maxThresh = maxThreshold
+        self.email_obj = tuple_obj[0]
+        self.led_obj = tuple_obj[1]
+
+    def checkAndAlert(self, numbers):
+        if max(numbers) > self.maxThresh:
+            self.email_obj.emailSent = True
+            self.led_obj.ledGlows = True
+        else:
+            self.email_obj.emailSent = False
+            self.led_obj.ledGlows = False
+
+
